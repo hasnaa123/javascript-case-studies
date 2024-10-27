@@ -1,0 +1,40 @@
+### Case Study: Student Grade Management System
+
+**Scenario:**
+You are tasked with developing a simple grade management system for a school. The system needs to manage student records, calculate their average grades, and determine whether each student has passed or failed based on specific criteria.
+
+### Requirements:
+
+1. **Student Data:**
+   - Each student has a name, a list of grades for different subjects, and an overall average grade.
+   - You need to store data for three students.
+
+2. **Grade Calculation:**
+   - Calculate the average grade for each student based on their grades in different subjects.
+
+3. **Pass/Fail Criteria:**
+   - A student passes if their average grade is 50 or above. Otherwise, they fail.
+
+4. **Grade Categorization:**
+   - Categorize the students based on their average grade:
+     - 90 and above: Excellent
+     - 75 to 89: Good
+     - 50 to 74: Average
+     - Below 50: Fail
+
+5. **Reporting:**
+   - Print a report for each student showing their name, average grade, and whether they passed or failed.
+   - Include their grade category in the report.
+
+6. **Scope:**
+   - Use both global and local variables where appropriate.
+   - Implement at least one function to calculate the average grade.
+   - Utilize loops to handle multiple students and conditional statements to determine the pass/fail status and grade category.
+
+**Hint:**
+- Consider using arrays to store the list of grades for each student.
+- Think about how to structure the loop to process each student’s data.
+
+### Deliverables:
+- Write JavaScript code to implement the above requirements.
+- Ensure that the code is organized, with comments explaining each section.

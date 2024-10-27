@@ -1,0 +1,20 @@
+### **Case Study: Online Shopping Cart System Summary**
+
+**Objective:** Develop an online shopping cart system for e-commerce that manages 
+products, customer accounts, and shopping functionality.
+
+**Key Components:**
+1. **Product Object:** Attributes include ID, Name, Price, Stock Quantity; 
+      methods for stock updates and discounts.
+2. **Customer Object:** Attributes include ID, Name, Email, Password; 
+      methods for account creation, login, and order history.
+3. **Shopping Cart Object:** Manages a product list and total price;
+      methods for adding, removing, and updating products.
+
+**Challenges:** 
+- Prevent overselling by managing stock.
+- Validate stock limits during cart operations.
+- Provide user-friendly feedback.
+
+**Application:** Essential for e-commerce platforms, enhancing customer
+ experience through efficient management of inventory and user accounts.

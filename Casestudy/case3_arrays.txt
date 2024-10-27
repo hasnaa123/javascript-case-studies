@@ -1,0 +1,13 @@
+Case Study: Building a To-Do List Application
+Overview:
+You are tasked with building a simple To-Do List application 
+based on arrays
+
+Features:
+Add Task: Users can add tasks to their to-do list.
+Remove Task: Users can remove tasks from their to-do list.
+Mark Task as Completed: Users can mark tasks as completed.
+Sort Tasks: Users can sort tasks alphabetically 
+or by completion status.
+Filter Tasks: Users can filter tasks to show only 
+completed or incomplete tasks.

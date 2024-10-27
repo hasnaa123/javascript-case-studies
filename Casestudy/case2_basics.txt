@@ -1,0 +1,54 @@
+### Case Study: Employee Performance Management System
+
+**Scenario:**
+You are developing a system to manage employee performance in a small company. The system will track employee details, calculate their performance over time, and generate a performance report. The focus is on using functions and closures to manage data efficiently, avoiding unnecessary global variables and ensuring that the system is memory-efficient.
+
+### Requirements:
+
+1. **Employee Data:**
+   - Each employee has a unique ID, name, position, and an array of monthly performance scores (ranging from 0 to 100).
+   - Employees can be added or removed from the system using functions.
+   
+2. **Performance Tracking:**
+   - Performance scores are added monthly for each employee.
+   - Calculate the average performance score for each employee using a closure to encapsulate the scores.
+   - Determine bonus eligibility based on the average performance score:
+     - Average score above 85: Eligible for a 10% bonus.
+     - Average score between 70 and 85: Eligible for a 5% bonus.
+     - Average score below 70: Not eligible for a bonus.
+
+3. **Memory Management:**
+   - The system should be designed to minimize memory usage, particularly when adding and removing employees.
+   - Use closures to encapsulate employee data, preventing unnecessary global variables.
+   - Ensure that memory is efficiently managed, avoiding memory leaks.
+
+4. **Report Generation:**
+   - Create a function to generate a report summarizing the performance of all employees, including their average scores and bonus eligibility.
+   - The report should also calculate the total bonus payout for the company.
+
+### Example Implementation Outline:
+
+1. **Encapsulating Employee Data:**
+   - Use closures to store and manage each employee’s data privately. This ensures that data is only accessible through specific functions and helps prevent memory leaks.
+   
+2. **Adding and Removing Employees:**
+   - Implement functions to add new employees and remove existing ones, ensuring that memory is freed up when employees are removed.
+
+3. **Calculating Performance and Bonuses:**
+   - Create a function that calculates the average performance score for each employee.
+   - Another function will determine the bonus eligibility based on the calculated average score.
+
+4. **Generating Reports:**
+   - Implement a function that generates a summary report for all employees, calculating the total bonus payout.
+
+### Deliverables:
+- Write JavaScript code that meets the above requirements.
+- Focus on using functions and closures to manage data and memory efficiently.
+- Include comments explaining how memory is managed and why closures were used.
+
+### **Hints:**
+- Use closures to encapsulate employee data (e.g., name, ID, performance scores) so that each employee’s data is stored privately.
+- Think about how to structure your code to avoid unnecessary global variables and to keep memory usage low.
+- Ensure that when an employee is removed, any associated data is also cleared from memory.
+
+This case study will help you practice using functions and closures to manage data efficiently, which is crucial for building scalable and memory-efficient JavaScript applications.

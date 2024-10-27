@@ -1,0 +1,13 @@
+
+Case Study: E-commerce Shopping Cart
+Overview:
+You're developing an e-commerce website that includes a shopping cart feature. The cart will store items that the user wishes to purchase. You'll use JavaScript arrays to manage the items in the cart, along with their quantities, prices, and other relevant details.
+
+Features:
+Add Item to Cart: Users can add items to their shopping cart.
+Remove Item from Cart: Users can remove items from their shopping cart.
+Update Item Quantity: Users can increase or decrease the quantity of items in their cart.
+Calculate Total Price: The cart should automatically calculate the total price based on the items and their quantities.
+Apply Discounts: Users can apply discount codes to their cart, which should adjust the total price.
+Sort Items by Price: Users can sort the items in their cart by price, either ascending or descending.
+Check for Out-of-Stock Items: The system should be able to detect and handle items that are out of stock.
