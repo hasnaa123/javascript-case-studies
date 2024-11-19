@@ -1,0 +1,14 @@
+Case Study: Room Reservation Workflow
+Problem Statement:
+You are designing a system that allows customers to reserve a room at a hotel. The system performs the following tasks in sequence:
+
+Step 1: Check if a room is available for the requested type and dates.
+Step 2: Save the customer’s booking details if a room is available.
+Step 3: Process the payment for the reservation.
+Step 4: Send a confirmation message to the customer.
+
+Steps to Implement:
+1. **Step 1**: Create a function checkRoomAvailability(roomType, checkInDate, checkOutDate) to simulate checking the room availability.
+2. **Step 2**: Create a function storeBookingDetails(customerDetails, bookingDetails) to simulate storing the booking details in a database.
+3. **Step 3**: Create a function processPayment(paymentDetails) to simulate processing the payment.
+4. **Step 4**: Create a function sendConfirmationEmail(customerEmail, bookingDetails) to simulate sending the confirmation email to the customer.

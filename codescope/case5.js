@@ -1,179 +1,108 @@
-class Product {
-    constructor(ID, Name, Description, Price, StQ) {
-        this.ID = ID;
-        this.Name = Name;
-        this.Description = Description;
-        this.Price = Price;
-        this.StQ = StQ;
-        this.discountPrice = 0; // Updated property name for clarity
-    }
+// Room Database
+const RoomDatabase = [
+    { roomNum: 101, roomType: "Suite", price: 500, checkOutDate: "2024-12-10" },
+    { roomNum: 102, roomType: "Deluxe", price: 300, checkOutDate: "2024-12-12" },
+    { roomNum: 103, roomType: "Standard", price: 150, checkOutDate: "2024-12-11" },
+];
 
-    updateQuantity(quantity) {
-        this.StQ += quantity; // Increment stock quantity
-    }
+// Customer Booking Database
+const booking = [];
 
-    getProductInfo() {
-        console.log(`ID: ${this.ID}`);
-        console.log(`Name: ${this.Name}`);
-        console.log(`Description: ${this.Description}`);
-        console.log(`Price: ${this.Price} $`);
-        console.log(`Stock: ${this.StQ}`);
-        console.log(`Discount Price: ${this.discountPrice} $`);
-    }
+// Payment Card Information
+const CardInfo = [
+    { cardNumber: "4111 1111 1111 1111", cardOwner: "Alice Brown", amount: 30000 },
+    { cardNumber: "4222 2222 2222 2222", cardOwner: "Bob Green", amount: 15000 },
+];
 
-    applyDiscount(discountPercentage) {
-        this.discountPrice = this.Price * (1 - discountPercentage / 100); // Calculate discount price
-    }
-}
-
-class Customer {
-    constructor(Id, Name, Email, Password) {
-        this.Id = Id;
-        this.Name = Name;
-        this.Email = Email;
-        this.Password = Password;
-        this.OrderHistory = []; // Initialize order history
-    }
-
-    login(email, password) {
-        if (this.Email === email && this.Password === password) {
-            console.log("Login successfully.... WELCOME");
-        } else {
-            console.log("Email or Password is wrong, please try again");
-        }
-    }
-
-    addToOrderHistory(shoppingCart) {
-        this.OrderHistory.push({
-            products: shoppingCart.productList,
-            total: shoppingCart.totalPrice
-        });
-    }
-
-    showOrderHistory() {
-        this.OrderHistory.forEach((order, index) => {
-            console.log(`Product List ${index + 1}`);
-            console.log(order.products);
-            console.log(`Total Price: ${order.total}`);
-        });
-    }
-}
-
-class ShoppingCart {
-    constructor() {
-        this.productList = [];
-        this.totalPrice = 0;
-    }
-
-    addProduct(product, quantity) {
-        if (product.StQ <= 0 || quantity <= 0) {
-            console.log("This product is not available in stock");
-            return;
-        }
-
-        const existingProduct = this.productList.find(p => p.ProductName === product.Name);
-
-        if (existingProduct) {
-            console.log("Product exists, updating quantity...");
-            existingProduct.quantity += quantity;
-        } else {
-            this.productList.push({
-                ProductName: product.Name,
-                quantity,
-                Price: product.Price,
-                discountPrice: product.discountPrice
+// Check Room Availability
+function availableRoom(roomType, checkInDate, checkOutDate) {
+    return new Promise((resolve, reject) => {
+        console.log("Checking room availability...");
+        const room = RoomDatabase.find(
+            (room) =>
+                room.roomType === roomType &&
+                new Date(checkInDate) >= new Date(room.checkOutDate)
+        );
+        if (room) {
+            resolve({
+                roomNum: room.roomNum,
+                roomType: room.roomType,
+                price: room.price,
+                checkInDate,
+                checkOutDate,
             });
-        }
-
-        product.StQ -= quantity; // Reduce the stock quantity
-    }
-
-    removeProduct(productName) {
-        const productIndex = this.productList.findIndex(p => p.ProductName.toUpperCase() === productName.toUpperCase());
-    
-        if (productIndex !== -1) {
-            this.productList.splice(productIndex, 1);
         } else {
-            console.log("Please enter a valid product");
+            reject("No rooms available for the selected dates.");
         }
-    }
+    });
+}
 
-    updateProductQuantity(product, newQuantity) {
-        const existingProduct = this.productList.find(p => p.ProductName.toUpperCase() === product.Name.toUpperCase());
-
-        if (existingProduct) {
-            const oldQuantity = existingProduct.quantity;
-            existingProduct.quantity = newQuantity;
-            product.StQ += oldQuantity - newQuantity; // Adjust stock based on the change in quantity
-        }
-    }
-
-    calculateTotalPrice() {
-        this.totalPrice = this.productList.reduce((total, product) => {
-            const priceToUse = product.discountPrice || product.Price; // Use discount price if available
-            return total + (priceToUse * product.quantity);
-        }, 0);
-        
-        console.log(`Total Price: ${this.totalPrice}`);
-    }
-
-    showProductList() {
-        this.productList.forEach((product, index) => {
-            console.log(`Product ${index} Info:`);
-            console.log(`Product: ${product.ProductName}`);
-            console.log(`Quantity: ${product.quantity}`);
-            console.log(`Price: ${product.Price}`);
-            console.log(`Discount Price: ${product.discountPrice}`);
+// Store Booking Details
+function storeBookingDetails(customerName, bookingDetails) {
+    return new Promise((resolve, reject) => {
+        console.log("Storing booking details...");
+        const bookingID = booking.length + 1;
+        booking.push({
+            id: bookingID,
+            name: customerName,
+            roomType: bookingDetails.roomType,
+            checkInDate: bookingDetails.checkInDate,
+            checkOutDate: bookingDetails.checkOutDate,
+            price: bookingDetails.price,
+            paid: false,
         });
+        resolve(bookingID);
+    });
+}
+
+// Process Payment
+function processPayment(bookingID, paymentCard) {
+    return new Promise((resolve, reject) => {
+        console.log("Processing payment...");
+        const bookingIndex = booking.findIndex((b) => b.id === bookingID);
+        const cardIndex = CardInfo.findIndex(
+            (c) =>
+                c.cardNumber === paymentCard &&
+                c.cardOwner === booking[bookingIndex].name
+        );
+
+        if (cardIndex >= 0 && CardInfo[cardIndex].amount >= booking[bookingIndex].price) {
+            CardInfo[cardIndex].amount -= booking[bookingIndex].price;
+            booking[bookingIndex].paid = true;
+            console.log("Payment successful. Remaining balance:", CardInfo[cardIndex].amount);
+            resolve("Payment successfully processed.");
+        } else {
+            reject("Payment failed. Please verify your account balance or card details.");
+        }
+    });
+}
+
+// Send Confirmation Email
+function sendConfirmationEmail(customerEmail, bookingDetails) {
+    return new Promise((resolve, reject) => {
+        console.log("Sending confirmation email...");
+        setTimeout(() => {
+            if (Math.random() > 0.2) {
+                resolve(`Confirmation email sent to ${customerEmail} for booking.`);
+            } else {
+                reject("Failed to send confirmation email due to a network issue.");
+            }
+        }, 1000);
+    });
+}
+
+// Booking Process
+async function bookRoom() {
+    try {
+        const roomDetails = await availableRoom("Suite", "2024-12-15", "2024-12-20");
+        const bookingID = await storeBookingDetails("Alice Brown", roomDetails);
+        await processPayment(bookingID, "4111 1111 1111 1111");
+        const confirmation = await sendConfirmationEmail("alice.brown@example.com", roomDetails);
+        console.log(confirmation);
+    } catch (error) {
+        console.error("Error:", error);
     }
 }
 
-// Example usage
-console.log("Create Users");
-const customer1 = new Customer(7654, "Jonathan", "Jonathan.cus1@gmail.com", "Passw@rd");
-customer1.login("Jonathan.cus1@gmail.com", "PDPHDBC");
-customer1.login("Jonathan.cus1@gmail.com", "Passw@rd");
-
-console.log("Create Products");
-const blackSneakers = new Product(1, "Black Sneakers", "Comfortable black sneakers for everyday wear", 145, 20);
-blackSneakers.getProductInfo();
-
-const blueJeans = new Product(2, "Blue Jeans", "Classic blue denim jeans", 234, 24);
-blueJeans.getProductInfo();
-
-const brownBoots = new Product(3, "Brown Boots", "Sturdy brown boots for outdoor activities", 100, 34);
-brownBoots.getProductInfo();
-
-console.log("Apply discount test on brownBoots and stock quantity");
-brownBoots.applyDiscount(50);
-brownBoots.updateQuantity(6);
-brownBoots.getProductInfo();
-
-console.log("Create Shopping Cart for customer 1");
-const cart1 = new ShoppingCart();
-cart1.addProduct(blackSneakers, 3);
-cart1.addProduct(brownBoots, 5);
-cart1.showProductList();
-
-const cart2 = new ShoppingCart();
-cart2.addProduct(blueJeans, 9);
-cart2.addProduct(brownBoots, 5);
-cart2.addProduct(blackSneakers, 4);
-cart2.calculateTotalPrice();
-
-console.log("Update product quantity and remove the brownBoots from the shopping cart");
-cart1.removeProduct(brownBoots.Name);
-cart1.updateProductQuantity(blackSneakers, 5);
-cart1.showProductList();
-
-console.log("Black Sneakers stock update");
-blackSneakers.getProductInfo();
-
-console.log("Total paid for the shopping cart");
-cart1.calculateTotalPrice();
-
-console.log("Order History Customer 1");
-customer1.addToOrderHistory(cart1);
-customer1.addToOrderHistory(cart2);
-customer1.showOrderHistory();
-
+console.log("Starting the booking process...");
+bookRoom();
